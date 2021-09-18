@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Megaverse\LaravelSesManager\Controllers;
 
 use Megaverse\LaravelSesManager\Contracts\SESMessageValidatorContract;
@@ -17,14 +16,8 @@ class SESWebhookController extends Controller
 {
     use DispatchesJobs;
 
-    /**
-     * @var SESMessageValidator
-     */
-    private $SESMessageValidator;
-
-    public function __construct(SESMessageValidatorContract $SESMessageValidator)
+    public function __construct()
     {
-        $this->SESMessageValidator = $SESMessageValidator;
         $this->middleware(SESConfirmWebhookMiddleware::class);
     }
 
@@ -32,9 +25,9 @@ class SESWebhookController extends Controller
      * @return string
      * @throws WrongWebhookRouting
      */
-    public function bounce()
+    public function bounce(SESMessageValidatorContract $SESMessageValidator)
     {
-        $message = $this->SESMessageValidator->getMessage();
+        $message = $SESMessageValidator->getMessage();
 
         $this->dispatchNow(new HandleSESBounce($message));
 
@@ -44,9 +37,9 @@ class SESWebhookController extends Controller
     /**
      * @throws WrongWebhookRouting
      */
-    public function complaint()
+    public function complaint(SESMessageValidatorContract $SESMessageValidator)
     {
-        $message = $this->SESMessageValidator->getMessage();
+        $message = $SESMessageValidator->getMessage();
 
         $this->dispatchNow(new HandleSESComplaint($message));
 
