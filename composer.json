@@ -14,7 +14,8 @@
   ],
   "autoload": {
     "psr-4": {
-      "Megaverse\\LaravelSesManager\\": "./src"
+      "Megaverse\\LaravelSesManager\\": "./src",
+      "Database\\Factories\\Megaverse\\LaravelSesManager\\Eloquent\\": "./factories"
     }
   },
   "autoload-dev": {
