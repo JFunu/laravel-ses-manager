@@ -1,30 +1,32 @@
 <?php
 
-
 namespace Megaverse\LaravelSesManager\Eloquent;
 
-
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class MailComplaintGroup extends Model
 {
-  const TABLE_NAME = 'email_complaint_groups';
+    use HasFactory;
 
-  protected $table = self::TABLE_NAME;
+    const TABLE_NAME = 'email_complaint_groups';
 
-  protected $fillable = [
-    'driver',
-    'reason',
-    'complained_at',
-    'payload',
-  ];
+    protected $table = self::TABLE_NAME;
 
-  protected $casts = [
-    'complained_at' => 'datetime',
-    'payload' => 'array',
-  ];
+    protected $fillable = [
+        'driver',
+        'reason',
+        'complained_at',
+        'payload',
+    ];
 
-  public function complaints() {
-    return $this->hasMany(MailComplaint::class, 'group_id');
-  }
+    protected $casts = [
+        'complained_at' => 'datetime',
+        'payload' => 'array',
+    ];
+
+    public function complaints()
+    {
+        return $this->hasMany(MailComplaint::class, 'group_id');
+    }
 }

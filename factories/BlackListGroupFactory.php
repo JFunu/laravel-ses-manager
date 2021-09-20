@@ -1,17 +1,33 @@
 <?php
 
+declare(strict_types=1);
 
-/** @var Factory $factory */
+namespace Database\Factories;
 
-use Faker\Generator as Faker;
-use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Megaverse\LaravelSesManager\Eloquent\BlackListGroup;
 
-$factory->define(BlackListGroup::class, function (Faker $faker) {
-    return [
-        'driver' => $faker->word,
-        'reason' => $faker->sentence,
-        'bounced_at' => $faker->dateTime,
-        'payload' => $faker->sentence,
-    ];
-});
+class BlackListGroupFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = BlackListGroup::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition(): array
+    {
+        return [
+            'driver' => $this->faker->word,
+            'reason' => $this->faker->sentence,
+            'bounced_at' => $this->faker->dateTime,
+            'payload' => $this->faker->sentence,
+        ];
+    }
+}
