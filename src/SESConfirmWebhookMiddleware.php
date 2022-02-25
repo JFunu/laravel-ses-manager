@@ -4,9 +4,8 @@
 namespace Megaverse\LaravelSesManager;
 
 use Illuminate\Http\Request;
-use Megaverse\LaravelSesManager\Contracts\SESMessageValidatorContract;
-use Megaverse\LaravelSesManager\Exceptions\WrongWebhookRouting;
 use Symfony\Component\HttpFoundation\Response;
+use Megaverse\LaravelSesManager\Contracts\SESMessageValidatorContract;
 
 class SESConfirmWebhookMiddleware
 {
@@ -28,9 +27,8 @@ class SESConfirmWebhookMiddleware
    */
   function handle (Request $request, $next) {
       if (
-          !$request->hasHeader('X-Amz-Sns-Topic-Arn')  &&
-          (config('ses-manager.sns.bounce_topic_arn') !== $request->header('X-Amz-Sns-Topic-Arn') ||
-              config('ses-manager.sns.complaint_topic_arn') !== $request->header('X-Amz-Sns-Topic-Arn'))
+          !$request->hasHeader('X-Amz-Sns-Topic-Arn') ||
+          !in_array($request->header('X-Amz-Sns-Topic-Arn'), config('ses-manager.sns.topic_arn', []))
       ) {
           return new Response('Bad Request', 400);
       }
