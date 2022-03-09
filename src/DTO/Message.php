@@ -17,7 +17,12 @@ class Message
     {
         $this->notificationType = $data['notificationType'] ?? $data['Type'];
 
-        $this->message = ($this->notificationType == 'SubscriptionConfirmation') || ($this->notificationType == 'AmazonSnsSubscriptionSucceeded') ? $data : $data[strtolower($this->notificationType)];
+        if ($this->notificationType === 'SubscriptionConfirmation' || $this->notificationType === 'AmazonSnsSubscriptionSucceeded') {
+            $this->message = $data;
+        } else if (isset($data[strtolower($this->notificationType)])) {
+            $this->message = $data[strtolower($this->notificationType)];
+        } else {
+            $this->message = $data['Message'];
+        }
     }
-
 }
