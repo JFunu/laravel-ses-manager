@@ -24,5 +24,10 @@ class Message
         } else {
             $this->message = $data['Message'];
         }
+        
+        
+        if (! is_array($this->message)) {
+            $this->message = json_decode($this->message, true);
+        }
     }
 }
